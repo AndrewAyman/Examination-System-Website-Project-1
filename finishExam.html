@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Exam Results - Examination System</title>
+    <link rel="stylesheet" href="finishExam.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+  </head>
+  <body>
+    <header>
+      <div class="logo">Examination System</div>
+      <nav>
+        <a href="index.html">Home</a>
+        <button id="darkModeToggle" title="Toggle Dark Mode">
+          <i class="fa-solid fa-moon"></i>
+        </button>
+        <a href="#" id="logout">Logout</a>
+      </nav>
+    </header>
+
+    <main class="score-wrapper">
+      <div class="overlay"></div>
+      <section class="container collect">
+        <div class="result-icon" id="resultIcon">🎉</div>
+        
+        <!-- User Name Display -->
+        <div class="user-info">
+          <h3 id="greetingText"> <span id="userName">Student</span></h3>
+        </div>
+        
+        <h1>Exam Completed!</h1>
+        <h2 id="result"></h2>
+        
+        <div class="score-visual">
+          <div class="score-circle">
+            <svg width="200" height="200">
+              <circle cx="100" cy="100" r="90" stroke="#e0e0e0" stroke-width="12" fill="none" />
+              <circle 
+                id="scoreCircle"
+                cx="100" 
+                cy="100" 
+                r="90" 
+                stroke="#10b981" 
+                stroke-width="12" 
+                fill="none"
+                stroke-dasharray="565.48"
+                stroke-dashoffset="565.48"
+                transform="rotate(-90 100 100)"
+                style="transition: stroke-dashoffset 1.5s ease;"
+              />
+            </svg>
+            <div class="score-percentage" id="scorePercentage">0%</div>
+          </div>
+        </div>
+        
+        <div class="hit"></div>
+        
+        <div class="actions">
+        
+          <a class="btn alt" href="index.html">
+            <i class="fa-solid fa-home"></i> Go Home
+          </a>
+        </div>
+      </section>
+    </main>
+
+    <footer>© 2025 Examination System. All rights reserved.</footer>
+
+    <script>
+      // Route protection
+      if (!localStorage.getItem("currentUserEmail")) {
+        location.replace("signin.html");
+      }
+      
+      // Dark Mode Toggle
+      const darkModeToggle = document.getElementById("darkModeToggle");
+      const body = document.body;
+      
+      // Check if dark mode was previously enabled
+      if (localStorage.getItem("darkMode") === "enabled") {
+        body.classList.add("dark-mode");
+        darkModeToggle.innerHTML = '<i class="fa-solid fa-sun"></i>';
+      }
+      
+      darkModeToggle.addEventListener("click", () => {
+        body.classList.toggle("dark-mode");
+        
+        if (body.classList.contains("dark-mode")) {
+          localStorage.setItem("darkMode", "enabled");
+          darkModeToggle.innerHTML = '<i class="fa-solid fa-sun"></i>';
+        } else {
+          localStorage.setItem("darkMode", "disabled");
+          darkModeToggle.innerHTML = '<i class="fa-solid fa-moon"></i>';
+        }
+      });
+      
+      // Display user name
+      const userEmail = localStorage.getItem("currentUserEmail");
+      const users = JSON.parse(localStorage.getItem("users")) || [];
+      const currentUser = users.find(u => u.email === userEmail);
+      
+      if (currentUser && currentUser.firstName && currentUser.lastName) {
+        const fullName = `${currentUser.firstName} ${currentUser.lastName}`;
+        document.getElementById("userName").textContent = fullName;
+      }
+      
+      // Logout handler
+      document.getElementById("logout").addEventListener("click", () => {
+        localStorage.removeItem("currentUserEmail");
+        sessionStorage.removeItem("examStarted");
+        location.replace("home.html");
+      });
+
+      // Display results
+      const score = Number(localStorage.getItem("finalScore"));
+      const total = Number(localStorage.getItem("totalQuestion"));
+      const resultEl = document.getElementById("result");
+      const hit = document.querySelector(".hit");
+      const resultIcon = document.getElementById("resultIcon");
+      const scorePercentage = document.getElementById("scorePercentage");
+      const scoreCircle = document.getElementById("scoreCircle");
+
+      if (!isNaN(score) && !isNaN(total) && total > 0) {
+        const percentage = Math.round((score / total) * 100);
+        
+        // Animate percentage
+        setTimeout(() => {
+          scorePercentage.textContent = percentage + "%";
+          
+          // Animate circle
+          const circumference = 565.48;
+          const offset = circumference - (percentage / 100) * circumference;
+          scoreCircle.style.strokeDashoffset = offset;
+          
+          // Change circle color based on score
+          if (percentage >= 80) {
+            scoreCircle.style.stroke = "#10b981";
+          } else if (percentage >= 50) {
+            scoreCircle.style.stroke = "#f59e0b";
+          } else {
+            scoreCircle.style.stroke = "#ef4444";
+          }
+        }, 300);
+        
+        resultEl.textContent = `Your Score: ${score} / ${total}`;
+        
+        // Customize message and icon based on score
+        if (percentage >= 80) {
+          resultIcon.textContent = "🏆";
+          hit.innerHTML = `
+            <strong style="color: #10b981; font-size: 20px;">Excellent!</strong><br>
+            Outstanding performance! Keep up the great work! ✨
+          `;
+        } else if (percentage >= 50) {
+          resultIcon.textContent = "👍";
+          hit.innerHTML = `
+            <strong style="color: #f59e0b; font-size: 20px;">Good Job!</strong><br>
+            You passed! Keep practicing to improve your score. 💪
+          `;
+        } else {
+          resultIcon.textContent = "📚";
+          hit.innerHTML = `
+            <strong style="color: #ef4444; font-size: 20px;">Keep Trying!</strong><br>
+            Don't give up! Review the material and try again. You can do it! 🌟
+          `;
+        }
+      } else {
+        resultEl.textContent = "No result found.";
+        hit.textContent = "Please take the exam first.";
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Start Exam - Examination System</title>
+    <link rel="stylesheet" href="start-exam.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+  </head>
+  <body>
+    <header>
+      <div class="logo">Examination System</div>
+      <nav>
+        <a href="index.html">Home</a>
+        <a href="start-exam.html" class="startButton">Start</a>
+        <button id="darkModeToggle" title="Toggle Dark Mode">
+          <i class="fa-solid fa-moon"></i>
+        </button>
+        <a href="#" id="logout">Logout</a>
+      </nav>
+    </header>
+
+    <main class="start-wrapper">
+      <div class="overlay"></div>
+      <section class="container-start-exam">
+        <div style="font-size: 48px; margin-bottom: 15px;">📝</div>
+        <h2>Welcome, <span id="userName">Student</span>!</h2>
+        <p style="opacity: 0.9; margin: 15px 0;">You are ready to begin your examination.</p>
+        
+        <div style="background: rgba(255, 255, 255, 0.1); padding: 20px; border-radius: 12px; margin: 20px 0; text-align: left;">
+          <div style="font-weight: bold; margin-bottom: 10px; font-size: 16px;">
+            <i class="fa-solid fa-info-circle"></i> Exam Instructions:
+          </div>
+          <ul style="list-style: none; padding: 0; margin: 0; font-size: 14px; line-height: 1.8; display: flex; flex-direction: column; gap: 10px;">
+            <li><i class="fa-solid fa-check" style="color: #10b981;"></i> Total Questions: <strong>10</strong></li>
+            <li><i class="fa-solid fa-check" style="color: #10b981;"></i> Duration: <strong>5 minutes</strong></li>
+            <li><i class="fa-solid fa-check" style="color: #10b981;"></i> Passing Score: <strong>50%</strong></li>
+            <li><i class="fa-solid fa-check" style="color: #10b981;"></i> You can bookmark questions for review</li>
+          </ul>
+        </div>
+        
+        <ul>
+          <li id="startExamBtn">
+            <i class="fa-solid fa-play"></i> Start Exam Now
+          </li>
+        </ul>
+      </section>
+    </main>
+
+    <footer>© 2025 Examination System. All rights reserved.</footer>
+
+    <script>
+      // Route protection
+      if (!localStorage.getItem("currentUserEmail")) {
+        location.replace("signin.html");
+      }
+      
+      // Dark Mode Toggle
+      const darkModeToggle = document.getElementById("darkModeToggle");
+      const body = document.body;
+      
+      // Check if dark mode was previously enabled
+      if (localStorage.getItem("darkMode") === "enabled") {
+        body.classList.add("dark-mode");
+        darkModeToggle.innerHTML = '<i class="fa-solid fa-sun"></i>';
+      }
+      
+      darkModeToggle.addEventListener("click", () => {
+        body.classList.toggle("dark-mode");
+        
+        if (body.classList.contains("dark-mode")) {
+          localStorage.setItem("darkMode", "enabled");
+          darkModeToggle.innerHTML = '<i class="fa-solid fa-sun"></i>';
+        } else {
+          localStorage.setItem("darkMode", "disabled");
+          darkModeToggle.innerHTML = '<i class="fa-solid fa-moon"></i>';
+        }
+      });
+      
+      // Display user name
+      const userEmail = localStorage.getItem("currentUserEmail");
+      const users = JSON.parse(localStorage.getItem("users")) || [];
+      const currentUser = users.find(u => u.email === userEmail);
+      
+      if (currentUser && currentUser.firstName) {
+        document.getElementById("userName").textContent = currentUser.firstName;
+      }
+      
+      // Logout handler
+      document.getElementById("logout").addEventListener("click", () => {
+        localStorage.removeItem("currentUserEmail");
+        sessionStorage.removeItem("examStarted");
+        location.replace("index.html");
+      });
+
+      // Start exam
+      document.getElementById("startExamBtn").addEventListener("click", () => {
+        sessionStorage.setItem("examStarted", "true");
+        location.replace("exam.html");
+      });
+    </script>
+  </body>
+</html>

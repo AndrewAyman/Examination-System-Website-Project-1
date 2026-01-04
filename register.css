@@ -1,0 +1,221 @@
+:root {
+  --brand1: #1e3c72;
+  --brand2: #2a5298;
+  --text: #333;
+  --accent1: #ff6f61;
+  --accent2: #ff9966;
+  --success: #4caf50;
+  --error: #e53935;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: "Segoe UI", Arial, sans-serif;
+  background: linear-gradient(135deg, var(--brand1), var(--brand2));
+  color: var(--text);
+  display: flex;
+  flex-direction: column;
+}
+
+header {
+  background: linear-gradient(to right, rgb(0, 0, 0), rgb(26, 26, 75));
+  color: #fff;
+  padding: 15px 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.logo {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+nav a {
+  color: #fff;
+  text-decoration: none;
+  margin-left: 20px;
+  padding: 8px 10px;
+  border-radius: 6px;
+  transition: background 0.25s ease;
+}
+
+nav a.active,
+nav a:hover {
+  background: #1f1f1f;
+}
+
+.container {
+  max-width: 600px;
+  margin: 40px auto;
+  background: #fff;
+  padding: 32px;
+  border-radius: 14px;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.25);
+  animation: slideInUp 0.5s ease;
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+h2 {
+  margin: 0 0 10px;
+  color: #1e3c72;
+  font-size: 28px;
+}
+
+p {
+  margin: 0 0 20px;
+  color: #555;
+  font-size: 15px;
+}
+
+label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 600;
+  color: #444;
+  font-size: 14px;
+}
+
+input {
+  width: 100%;
+  padding: 12px 14px;
+  margin-bottom: 4px;
+  border: 2px solid #ddd;
+  border-radius: 10px;
+  transition: all 0.25s ease;
+  font-size: 15px;
+  background: #fafafa;
+}
+
+input:focus {
+  outline: none;
+  border-color: #2a5298;
+  background: #fff;
+  box-shadow: 0 0 0 3px rgba(42, 82, 152, 0.1);
+}
+
+input.invalid {
+  border-color: var(--error);
+  background: #fff5f5;
+}
+
+input.invalid:focus {
+  box-shadow: 0 0 0 3px rgba(229, 57, 53, 0.1);
+}
+
+.error-message {
+  color: var(--error);
+  font-size: 13px;
+  margin-bottom: 12px;
+  display: none;
+  padding: 6px 10px;
+  background: #ffebee;
+  border-radius: 6px;
+  border-left: 3px solid var(--error);
+  animation: shake 0.3s ease;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}
+
+button {
+  width: 100%;
+  padding: 14px;
+  border: none;
+  border-radius: 30px;
+  background: linear-gradient(135deg, var(--accent1), var(--accent2));
+  color: #fff;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+  transition: all 0.3s ease;
+  margin-top: 10px;
+}
+
+button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
+}
+
+button:active {
+  transform: translateY(0);
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Password strength indicator */
+.password-strength {
+  height: 4px;
+  background: #e0e0e0;
+  border-radius: 2px;
+  margin: 8px 0 12px;
+  overflow: hidden;
+  display: none;
+}
+
+.password-strength-bar {
+  height: 100%;
+  width: 0%;
+  transition: all 0.3s ease;
+  background: linear-gradient(90deg, #e53935, #ffa726, #4caf50);
+}
+
+footer {
+  background: linear-gradient(to right, rgb(0, 0, 0), rgb(26, 26, 75));
+  color: #aaa;
+  text-align: center;
+  padding: 14px;
+  margin-top: auto;
+}
+
+.startButton{
+  background-color: #29325a;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .container {
+    margin: 20px;
+    padding: 24px;
+  }
+  
+  h2 {
+    font-size: 24px;
+  }
+  
+  nav a {
+    margin-left: 10px;
+    font-size: 14px;
+  }
+}

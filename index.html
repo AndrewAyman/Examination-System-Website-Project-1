@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Examination System - Home</title>
+    <link rel="stylesheet" href="home.css" />
+  </head>
+  <body>
+    <header>
+      <div class="logo">Examination System</div>
+      <nav>
+        <a href="index.html" class="startButton">Home</a>
+        <a href="register.html">Register</a>
+        <a href="signin.html">Login</a>
+      </nav>
+    </header>
+
+    <main class="hero">
+      <h1>Welcome to Examination System</h1>
+      <p>Your gateway to smarter exams and seamless learning.</p>
+      <div class="buttons">
+        <a href="register.html" class="btn">Create Account</a>
+        <a href="signin.html" class="btn alt">Login</a>
+      </div>
+    </main>
+
+    <footer>© 2025 Examination System. All rights reserved.</footer>
+    
+    <script>
+      // Redirect if already logged in
+      if (localStorage.getItem("currentUserEmail")) {
+        window.location.replace("start-exam.html");
+      }
+    </script>
+  </body>
+</html>

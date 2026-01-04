@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Create Account - Examination System</title>
+    <link rel="stylesheet" href="register.css" />
+  </head>
+  <body>
+    <header>
+      <div class="logo">Examination System</div>
+      <nav>
+        <a href="index.html">Home</a>
+        <a href="register.html" class="startButton">Register</a>
+        <a href="signin.html">Login</a>
+      </nav>
+    </header>
+
+    <main class="container">
+      <h2>Create Your Account</h2>
+      <p>
+        Please fill in your details to access the Examination System portal.
+      </p>
+      <form onsubmit="validateRegistrationForm(event)" autocomplete="off">
+        <label for="firstName">First Name *</label>
+        <input 
+          type="text" 
+          id="firstName" 
+          required 
+          placeholder="Enter your first name"
+          autocomplete="given-name"
+        />
+        <div id="firstName-error" class="error-message"></div>
+
+        <label for="lastName">Last Name *</label>
+        <input 
+          type="text" 
+          id="lastName" 
+          required 
+          placeholder="Enter your last name"
+          autocomplete="family-name"
+        />
+        <div id="lastName-error" class="error-message"></div>
+
+        <label for="email">Email *</label>
+        <input 
+          type="email" 
+          id="email" 
+          required 
+          placeholder="example@email.com"
+          autocomplete="email"
+        />
+        <div id="email-error" class="error-message"></div>
+
+        <label for="password">Password *</label>
+        <input 
+          type="password" 
+          id="password" 
+          required 
+          placeholder="Minimum 8 characters"
+          autocomplete="new-password"
+        />
+        <div id="password-error" class="error-message"></div>
+
+        <label for="confirmPassword">Confirm Password *</label>
+        <input 
+          type="password" 
+          id="confirmPassword" 
+          required 
+          placeholder="Re-enter your password"
+          autocomplete="new-password"
+        />
+        <div id="confirmPassword-error" class="error-message"></div>
+
+        <button type="submit">Create Account →</button>
+      </form>
+      
+      <div style="text-align: center; margin-top: 20px; color: #666; font-size: 14px;">
+        Already have an account? 
+        <a href="signin.html" style="color: #1e3c72; font-weight: 600; text-decoration: none;">Login here</a>
+      </div>
+    </main>
+
+    <footer>© 2025 Examination System. All rights reserved.</footer>
+
+    <script src="script.js"></script>
+    <script>
+      // منع الرجوع للصفحة بعد التسجيل الناجح
+      if (localStorage.getItem("currentUserEmail")) {
+        window.location.replace("start-exam.html");
+      }
+    </script>
+  </body>
+</html>
